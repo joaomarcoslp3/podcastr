@@ -1,5 +1,20 @@
-export default function Home() {
+import { Header } from "../components";
+
+export default function Home (props) {
   return (
-    <h1>Hello World</h1>
+    <h1>Alo</h1>
+    
   )
+}
+
+export async function getStaticProps() {
+  const response = await fetch('http://localhost:3333/episodes')
+  const data = await response.json()
+
+  return {
+    props: {
+      episodes: data
+    },
+    revalidate: 60 * 60 * 8
+  }
 }
