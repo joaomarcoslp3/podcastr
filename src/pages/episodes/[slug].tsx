@@ -1,15 +1,15 @@
 import { format, parseISO } from 'date-fns'
 import Image from 'next/image'
+import Head from 'next/head'
 import { ptBR } from 'date-fns/locale'
 import { GetStaticPaths, GetStaticProps } from 'next'
-import { useRouter } from 'next/router'
 
 import { api } from '../../services/api'
 import styles from './episode.module.scss'
 import { convertDurationToTimeString } from '../../utils'
 import Link from 'next/link'
 import { useContext } from 'react'
-import { PlayerContext } from '../../providers'
+import { usePlayer } from '../../providers'
 
 type Episode = {
   id: string
@@ -28,10 +28,13 @@ type EpisodeProps = {
 }
 
 export default function Episode ({ episode }: EpisodeProps) {
-  const { play } = useContext(PlayerContext)
+  const { play } = usePlayer()
 
   return (
     <div className={styles.episode}>
+      <Head>
+        <title>{episode.title} | Podcastr</title>
+      </Head>
       <div className={styles.thumbnailContainer}>
         <Link href='/'>
           <button type='button'>
